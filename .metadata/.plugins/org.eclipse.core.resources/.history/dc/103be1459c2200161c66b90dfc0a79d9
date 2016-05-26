@@ -1,0 +1,19 @@
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
+import com.Blog.Hibernate.HibernateDao;
+
+
+public class Tester {
+	
+	private static SessionFactory factory;
+	
+	public static void main(String[] args){
+		factory = HibernateDao.openSession();
+		
+		Session session = factory.openSession();
+        session.beginTransaction();
+        
+        
+	}
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="BlogDaoTest" project="Blog" tests="11" started="11" failures="0" errors="0" ignored="0">
+  <testsuite name="com.Blog.Dao.test.BlogDaoTest" time="0.484">
+    <testcase name="testEditPost" classname="com.Blog.Dao.test.BlogDaoTest" time="0.25"/>
+    <testcase name="testEditTitle" classname="com.Blog.Dao.test.BlogDaoTest" time="0.032"/>
+    <testcase name="testGetBlogIdWrongUserNameAndTitle" classname="com.Blog.Dao.test.BlogDaoTest" time="0.015"/>
+    <testcase name="testGetBlog" classname="com.Blog.Dao.test.BlogDaoTest" time="0.031"/>
+    <testcase name="testInsertBlog" classname="com.Blog.Dao.test.BlogDaoTest" time="0.016"/>
+    <testcase name="testFetchFiveRecentBlogs" classname="com.Blog.Dao.test.BlogDaoTest" time="0.047"/>
+    <testcase name="testGetBlogNull" classname="com.Blog.Dao.test.BlogDaoTest" time="0.031"/>
+    <testcase name="testDeleteBlogDoesNotExist" classname="com.Blog.Dao.test.BlogDaoTest" time="0.016"/>
+    <testcase name="testGetBlogId" classname="com.Blog.Dao.test.BlogDaoTest" time="0.0"/>
+    <testcase name="testDeleteBlog" classname="com.Blog.Dao.test.BlogDaoTest" time="0.031"/>
+    <testcase name="testFetchFiveRecentBlogsWithNoBlogs" classname="com.Blog.Dao.test.BlogDaoTest" time="0.015"/>
+  </testsuite>
+</testrun>

@@ -1,0 +1,75 @@
+package com.Blog.Service;
+
+import java.util.List;
+
+import com.Blog.beans.Blog;
+import com.Blog.beans.Users;
+
+public interface IBlog {
+	/**
+	 * To insert a blog in the database.
+	 * 
+	 * @param blog
+	 *            Blog to be inserted in the database.
+	 * @return boolean Failure of success.
+	 */
+	public boolean insertBlog(Blog blog);
+
+	/**
+	 * To edit the title of the blog.
+	 * 
+	 * @param newTitle
+	 *            Modified title of the blog.
+	 * @param blogId
+	 *            Blog id for which the title is to be modified.
+	 * @return boolean Failure or Success.
+	 */
+	public boolean editTitle(String newTitle, long blogId);
+
+	/**
+	 * Edits the contents of the blog post.
+	 * 
+	 * @param newPost
+	 *            Modified contents of the blogPost.
+	 * @param blogId
+	 *            Blog id for which the contents has to be modified.
+	 * @return boolean Failure of Success.
+	 */
+	public boolean editPost(String newPost, long blogId);
+
+	/**
+	 * Return the contents of the blog.
+	 * 
+	 * @param blogId
+	 *            Blog id for which the content is to be retrieved.
+	 * @return Blog Entire blog contents.
+	 */
+	public Blog getBlog(long blogId);
+	
+	/**
+	 * To delete the given blog.
+	 * 
+	 * @param blogId
+	 *            Id of the blog to be deleted.
+	 * @return boolean True or False depending on the success of failure of the operation.
+	 */
+	public boolean deleteBlog(long blogId);
+	
+	/**
+	 * To obtain the blogId of the blog.
+	 * 
+	 * @param username
+	 *            Username of the user who wrote the blog.
+	 * @param title
+	 *            Title of the blog.
+	 * @return long BlogId of the blog.
+	 */
+	public long getBlogId(Users user, String title);
+	
+	/**
+	 * Returns the most recently written blogs.
+	 * 
+	 * @return List<Blog> List of five most recently written blogs.
+	 */
+	public List<Blog> fetchFiveRecentBlogs();
+}

@@ -1,0 +1,89 @@
+package com.Blog.Dao;
+
+import java.util.Date;
+import java.util.List;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
+import com.Blog.Hibernate.HibernateDao;
+import com.Blog.Service.ILikes;
+import com.Blog.beans.Blog;
+import com.Blog.beans.Likes;
+import com.Blog.beans.Users;
+
+public class LikesDao implements ILikes {
+	private static SessionFactory factory;
+
+	public LikesDao() {
+		factory = HibernateDao.openSession();
+	}
+
+	@Override
+	public boolean setLikes(Blog blog,Users user) {
+		Likes like = new Likes(blog,user,new Date());
+		Session session = factory.openSession();
+		Transaction tx = null;
+		Long likeId = new Long(0);
+		try {
+			tx = session.beginTransaction();
+			likeId = (Long) session.save(like);
+			tx.commit();
+		} catch (HibernateException e) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return likeId.longValue() > 0;
+	}
+
+	@Override
+	public long getLikes(long blogId) {
+		Session session = factory.openSession();
+		String hql = "Select count(*) FROM Likes as L where L.blogId = :blogId";
+		Query query = session.createQuery(hql).setParameter("blogId", blogId);
+		long likes = (long) query.uniqueResult();
+		return likes;
+	}
+
+	@Override
+	public List<Long> getUserLikes(long userId) {
+		Session session = factory.openSession();
+		String hql = "SELECT l.blogId FROM Likes as l where l.userId = :userId";
+		@SuppressWarnings("unchecked")
+		List<Long> blogIds = session.createQuery(hql).setParameter("userId", userId).list();
+		return blogIds;
+	}
+
+	@Override
+	public List<Long> getBlogLikes(long blogId) {
+		Session session = factory.openSession();
+		String hql = "SELECT l.userId FROM Likes as l where l.blogId = :blogId";
+		@SuppressWarnings("unchecked")
+		List<Long> userIds = session.createQuery(hql).setParameter("blogId", blogId).list();
+		return userIds;
+	}
+
+	@Override
+	public long getLikesOnBlog(Blog blog) {
+		Session session = factory.openSession();
+		String hql = "SELECT count(*) FROM Likes as L where L.blog = :blog";
+		long likes = session.createQuery(hql).setParameter("blog", blog).executeUpdate();
+		session.close();
+		return likes;
+	}
+
+	@Override
+	public List<Users> getBlogLikesByUser(Blog blog) {
+		Session session = factory.openSession();
+		String hql = "SELECT user FROM Likes as L where L.blog = :blog";
+		L
+		return null;
+	}
+}

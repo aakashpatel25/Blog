@@ -1,0 +1,107 @@
+package com.Blog.Dao;
+
+import java.util.Date;
+import java.util.List;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
+import com.Blog.Hibernate.HibernateDao;
+import com.Blog.Service.ILikes;
+import com.Blog.beans.Blog;
+import com.Blog.beans.Likes;
+import com.Blog.beans.Users;
+
+public class LikesDao implements ILikes {
+	private static SessionFactory factory;
+
+	/**
+	 * LikesDao constructor.
+	 */
+	public LikesDao() {
+		factory = HibernateDao.openSession();
+	}
+
+	/**
+	 * To setLike on a particular blog.
+	 * 
+	 * @param Blog
+	 *            Blog on which is liked.
+	 * @param User
+	 *            User who liked the blog.
+	 * @return boolean True or False depending on success or failure of the operation.
+	 */
+	@Override
+	public boolean setLikes(Blog blog, Users user) {
+		Likes like = new Likes(blog, user);
+		Session session = factory.openSession();
+		Transaction tx = null;
+		Long likeId = new Long(0);
+		try {
+			tx = session.beginTransaction();
+			likeId = (Long) session.save(like);
+			tx.commit();
+		} catch (HibernateException e) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return likeId.longValue() > 0;
+	}
+
+	/**
+	 * To get likes on a particular blog.
+	 * 
+	 * @param Blog
+	 *            Blog for which the likes are to be retrieved.
+	 * @return Long Number of likes on a particular blog.
+	 */
+	@Override
+	public long getLikesOnBlog(Blog blog) {
+		Session session = factory.openSession();
+		String hql = "SELECT count(*) FROM Likes as L where L.blog = :blog";
+		long likes = (long) session.createQuery(hql).setParameter("blog", blog).uniqueResult();
+		session.close();
+		return likes;
+	}
+
+	/**
+	 * To get the list of users that liked the blog.
+	 * 
+	 * @param Blog
+	 *            Blog for which the list of users liked the blog is to be retrieved.
+	 * @return List<Users> List of users who liked a particular blog.
+	 */
+	@Override
+	public List<Users> getBlogLikesByUser(Blog blog) {
+		Session session = factory.openSession();
+		String hql = "SELECT user FROM Likes as L where L.blog = :blog";
+		@SuppressWarnings("unchecked")
+		List<Users> users = session.createQuery(hql).setParameter("blog", blog).list();
+		session.close();
+		return users;
+	}
+
+	/**
+	 * To unlike a particular blog.
+	 * 
+	 * @param Blog
+	 *            Blog that is to be unliked.
+	 * @param user
+	 *            User that liked the blog.
+	 * @return boolean Success or Failure of the operation.
+	 */
+	@Override
+	public boolean unlike(Blog blog, Users user) {
+		Session session = factory.openSession();
+		String hql = "DELETE FROM Likes WHERE blog = :blog and user= :user";
+		int result = session.createQuery(hql).setParameter("blog", blog)
+				.setParameter("user", user).executeUpdate();
+		return result > 0;
+	}
+}

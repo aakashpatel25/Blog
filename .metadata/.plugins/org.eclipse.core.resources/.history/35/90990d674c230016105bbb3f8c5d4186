@@ -1,0 +1,59 @@
+package com.Blog.Dao;
+
+import com.Blog.Service.ILikes;
+
+public class Likes implements ILikes {
+	private static SessionFactory factory;
+
+	public LikesDao() {
+		factory = HibernateDao.openSession();
+	}
+
+	@Override
+	public boolean setLikes(long blogId, long userId) {
+		Likes like = new Likes(blogId,userId,new Date());
+		Session session = factory.openSession();
+		Transaction tx = null;
+		Long likeId = new Long(0);
+		try {
+			tx = session.beginTransaction();
+			likeId = (Long) session.save(like);
+			tx.commit();
+		} catch (HibernateException e) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return likeId.longValue() > 0;
+	}
+
+	@Override
+	public long getLikes(long blogId) {
+		Session session = factory.openSession();
+		String hql = "Select count(*) FROM Likes as L where L.blogId = :blogId";
+		Query query = session.createQuery(hql).setParameter("blogId", blogId);
+		long likes = (long) query.uniqueResult();
+		return likes;
+	}
+
+	@Override
+	public List<Long> getUserLikes(long userId) {
+		Session session = factory.openSession();
+		String hql = "SELECT l.blogId FROM Likes as l where l.userId = :userId";
+		@SuppressWarnings("unchecked")
+		List<Long> blogIds = session.createQuery(hql).setParameter("userId", userId).list();
+		return blogIds;
+	}
+
+	@Override
+	public List<Long> getBlogLikes(long blogId) {
+		Session session = factory.openSession();
+		String hql = "SELECT l.userId FROM Likes as l where l.blogId = :blogId";
+		@SuppressWarnings("unchecked")
+		List<Long> userIds = session.createQuery(hql).setParameter("blogId", blogId).list();
+		return userIds;
+	}
+}

@@ -1,0 +1,146 @@
+package com.Blog.beans;
+
+import java.util.Date;
+
+public class Comments {
+	/**
+	 * Unique identifier of the comment.
+	 */
+	long commentId;
+
+	/**
+	 * User who commented on the blog. 
+	 */
+	Users user;
+	
+	/**
+	 * Blog on which the comment was written to.
+	 */
+	Blog blog;
+	
+	/**
+	 * Message written in the comment.
+	 */
+	String comment;
+	
+	/**
+	 * Time when the comment was posted.
+	 */
+	Date timeStamp;
+	
+	
+	/**
+	 * Comment constructor
+	 * @param User
+	 * 		User posting comment.
+	 * @param message
+	 * 		Message embedded inside the comment.
+	 * @param time
+	 * 		Time when the comment was posted.
+	 * @param blog
+	 * 		Blog on which the comment was posted.
+	 * @return Comment
+	 * 		Comment object.
+	 */
+	public Comments(Users usr,String message,Blog blg){
+		user = usr;
+		comment = message;
+		timeStamp = new Date();
+		blog = blg;
+	}
+	
+	/**
+	 * Default Constructor. 
+	 */
+	public Comments(){
+		
+	}
+	
+	/**
+	 * Gets the User to whom the comment belongs to
+	 * @return Users
+	 * 		user object.
+	 */
+	public Users getUser() {
+		return user;
+	}
+	
+	/**
+	 * To set the userId of the person who wrote the comment.	
+	 * @param userId
+	 * 		Long userId.
+	 */
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	/**
+	 * Gets the id of the blog on which the comment was written to.
+	 * @return long
+	 * 		Returns the id of the blog. 
+	 */
+	public long getBlogId() {
+		return blogId;
+	}
+	
+	/**
+	 * To set the blogId on which the user has written a comment.
+	 * @param blogId
+	 * 		Long blogId.
+	 */
+	public void setBlogId(long blogId) {
+		this.blogId = blogId;
+	}
+	
+	/**
+	 * Gets the comment associated with a particular blogpost.
+	 * @return String
+	 * 		Returns the string type of comment.
+	 */
+	public String getComment() {
+		return comment;
+	}
+	
+	/**
+	 * Gets the comment and sets it. Used when editing the comments.
+	 * @param comment
+	 * 		String Message.
+	 */
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+	
+	/**
+	 * Returns the timestamp of the comment. 
+	 * @return Date
+	 * 		Timestamp.
+	 */
+	public Date getTimeStamp() {
+		return timeStamp;
+	}
+	
+	/**
+	 * To set the timestamp when the comment was written!
+	 * @param timeStamp
+	 * 		Date timeStamp.
+	 */
+	public void setTimeStamp(Date timeStamp) {
+		this.timeStamp = timeStamp;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public long getCommentId() {
+		return commentId;
+	}
+
+	/**
+	 * 
+	 * @param commentId
+	 */
+	public void setCommentId(long commentId) {
+		this.commentId = commentId;
+	}
+}

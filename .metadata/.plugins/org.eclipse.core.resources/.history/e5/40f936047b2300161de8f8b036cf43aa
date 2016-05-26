@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+ 
+ <hibernate-mapping>
+   <class name="com.Blog.beans.Comments" table="Comments">
+      <meta attribute="class-description">
+         This class contains the comment information! 
+      </meta>
+      <id name="commentId" type="long" column="comment_id">
+         <generator class="native"/>
+      </id>
+      <property name="timeStamp" column="time" type="date" />
+      <property name="comment" column="comment" type="string" />
+      
+      <many-to-one name="blog" class="com.Blog.beans.Blog" column="blog_id" />
+      <many-to-one name="user" class="com.Blog.beans.Users" column="user_id" not-null="true"/>
+   </class>
+</hibernate-mapping>

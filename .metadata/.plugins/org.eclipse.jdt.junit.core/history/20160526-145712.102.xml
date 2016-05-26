@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="CommentsDaoTest" project="Blog" tests="3" started="3" failures="0" errors="0" ignored="0">
+  <testsuite name="com.Blog.Dao.test.CommentsDaoTest" time="0.266">
+    <testcase name="testEditComment" classname="com.Blog.Dao.test.CommentsDaoTest" time="0.235"/>
+    <testcase name="testDeleteComment" classname="com.Blog.Dao.test.CommentsDaoTest" time="0.015"/>
+    <testcase name="testAddComment" classname="com.Blog.Dao.test.CommentsDaoTest" time="0.016"/>
+  </testsuite>
+</testrun>

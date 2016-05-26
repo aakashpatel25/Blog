@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="CommentsDaoTest" project="Blog" tests="5" started="5" failures="0" errors="0" ignored="0">
+  <testsuite name="com.Blog.Dao.test.CommentsDaoTest" time="0.298">
+    <testcase name="testEditComment" classname="com.Blog.Dao.test.CommentsDaoTest" time="0.188"/>
+    <testcase name="testDeleteComment" classname="com.Blog.Dao.test.CommentsDaoTest" time="0.032"/>
+    <testcase name="testDeleteCommentZero" classname="com.Blog.Dao.test.CommentsDaoTest" time="0.031"/>
+    <testcase name="testGetCommentById" classname="com.Blog.Dao.test.CommentsDaoTest" time="0.031"/>
+    <testcase name="testAddComment" classname="com.Blog.Dao.test.CommentsDaoTest" time="0.016"/>
+  </testsuite>
+</testrun>

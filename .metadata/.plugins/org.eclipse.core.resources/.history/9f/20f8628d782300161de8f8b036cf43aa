@@ -1,0 +1,132 @@
+package com.Blog.Dao;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
+import com.Blog.Hibernate.HibernateDao;
+import com.Blog.Service.IComments;
+import com.Blog.beans.Blog;
+import com.Blog.beans.Comments;
+import com.Blog.beans.Users;
+
+public class CommentsDao implements IComments {
+	private static SessionFactory factory;
+
+	/**
+	 * CommentsDao constructor.
+	 */
+	public CommentsDao() {
+		factory = HibernateDao.openSession();
+	}
+
+	/**
+	 * To add a comment to a database on a particular blog.
+	 * 
+	 * @param Comments
+	 *            Comment that is to be added on the blog.
+	 * @return boolean True or false depending on the success or failure of the operation.
+	 */
+	@Override
+	public boolean addComment(Comments comment) {
+		Session session = factory.openSession();
+		Transaction tx = null;
+		Long commentId = new Long(0);
+		try {
+			tx = session.beginTransaction();
+			commentId = (Long) session.save(comment);
+			tx.commit();
+		} catch (HibernateException e) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return commentId.longValue() > 0;
+	}
+
+	/**
+	 * To edit the comment.
+	 * 
+	 * @param commentId
+	 *            CommentId of the comment.
+	 * @return boolean True or false depending on success or failure.
+	 */
+	@Override
+	public boolean editComment(long commentId, String newComment) {
+		Session session = factory.openSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			Comments comments = (Comments) session
+					.createQuery("FROM Comment as c where c.commentId = :commentId")
+					.setParameter("commentId", commentId).uniqueResult();
+			comments.setComment(newComment);
+			session.update(comments);
+			tx.commit();
+		} catch (HibernateException e) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return true;
+	}
+
+	/**
+	 * To delete a comment on a particular blog.
+	 * 
+	 * @param commentId
+	 *            Id of the comment.
+	 * @return boolean True or false depending on the success of the operation.
+	 */
+	@Override
+	public boolean deleteComment(long commentId) {
+		Session session = factory.openSession();
+		String hql = "DELETE FROM Comments where commentId = :commentId";
+		int result = session.createQuery(hql).setParameter("commentId", commentId).executeUpdate();
+		return result>0;
+	}
+
+	/**
+	 * To delete all the comments on a particular blog.
+	 * 
+	 * @param Blog
+	 *            Blog on which comments are to be deleted.
+	 * @return boolean True or false depending on success or failure of operation.
+	 */
+	@Override
+	public boolean deleteBlogComments(Blog blog) {
+		Session session = factory.openSession();
+		int result = session
+				.createQuery("Delete Comment where Comment.blog = :blog")
+				.setParameter("blog", blog).executeUpdate();
+		session.close();
+		return result > 0;
+	}
+
+	/**
+	 * To obtain an id of the particular comment.
+	 * 
+	 * @param user
+	 *            User who wrote the comment.
+	 * @param blog
+	 *            Blog on which the comment is written.
+	 * @return long Id of the comment.
+	 */
+	@Override
+	public long getCommentId(Users user, Blog blog) {
+		Session session = factory.openSession();
+		long commentId = (long) session
+				.createQuery("From Comments as c where c.blog=:blog and c.user = :user")
+				.setParameter("blog", blog).setParameter("user", user)
+				.uniqueResult();
+		session.close();
+		return commentId;
+	}
+}

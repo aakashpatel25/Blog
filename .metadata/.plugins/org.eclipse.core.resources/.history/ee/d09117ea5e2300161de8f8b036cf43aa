@@ -1,0 +1,97 @@
+package com.Blog.Dao.test;
+
+import org.junit.After;
+import org.junit.Before;
+
+import com.Blog.Dao.BlogDao;
+import com.Blog.Dao.UsersDao;
+import com.Blog.Service.IBlog;
+import com.Blog.Service.IUsers;
+import com.Blog.beans.Blog;
+import com.Blog.beans.Users;
+
+public class BlogDaoTest {
+	/**
+	 * Blog dao.
+	 */
+	private IBlog blogDao;
+	
+	/**
+	 * User dao.
+	 */
+	private IUsers userDao;
+
+	/**
+	 * User object.
+	 */
+	private Users user;
+	
+	/**
+	 * Constant for username.
+	 */
+	private static final String USER_NAME = "Writer";
+	
+	/**
+	 * Constant for password.
+	 */
+	private static final String PASSWORD = "admin123";
+	
+	/**
+	 * Constant for first name of user.
+	 */
+	private static final String FIRST_NAME = "User";
+	
+	/**
+	 * Constant for last name of user.
+	 */
+	private static final String LAST_NAME = "Users";
+	
+	/**
+	 * Constant for email of user.
+	 */
+	private static final String EMAIL = "admin@admin.com";
+	
+	/**
+	 * List of constants for Blog titles. 
+	 */
+	private static final String[] TITLES = {"Blog 1","Blog 2","Blog 3", "Blog 4","Blog 5"};
+	
+	/**
+	 * List of constants for Post titles.
+	 */
+	private static final String[] POSTS ={"Post 1","Post 2","Post 3","Post 4","Post 5"};
+	
+	
+	
+	/**
+	 * Constructor of the test class.
+	 */
+	public BlogDaoTest(){
+		user = new Users(USER_NAME,PASSWORD,FIRST_NAME,LAST_NAME,EMAIL);
+		userDao = new UsersDao();
+		blogDao = new BlogDao();
+	}
+	
+	/**
+	 * Setup the environment before starting the testing.
+	 */
+	@Before
+	public void setUp(){
+		userDao.createNewUser(user);
+	}
+	
+	/**
+	 * To create a single blog to be inserted into database.
+	 * @return Blog
+	 * 		Newly created blog.
+	 */
+	private Blog createOneBlog(){
+		Blog blog = new Blog(user,TITLES[0],POSTS[0]);
+		return blog;
+	}
+	
+	@After
+	public void cleanUp(){
+		userDao.deleteUser(userDao.findUserId(user.getUsername()));
+	}
+}

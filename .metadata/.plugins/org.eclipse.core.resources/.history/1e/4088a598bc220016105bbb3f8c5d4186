@@ -1,0 +1,37 @@
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
+import com.Blog.Hibernate.HibernateDao;
+import com.Blog.beans.Blog;
+import com.Blog.beans.Users;
+
+
+public class Tester {
+	
+	private static SessionFactory factory;
+	
+	public static void main(String[] args){
+		factory = HibernateDao.openSession();
+		
+		Session session = factory.openSession();
+        session.beginTransaction();
+        
+        Users user = new Users("admin","admin","admin","admin","admin@admin.com");
+        
+        Blog blog = new Blog(user,"Post1","Data");
+        
+        Blog blog2 = new Blog(user,"Post2","Data");
+        
+        //Set<Blog> blogs = new HashSet<Blog>();
+        //blogs.add(blog);
+        //blogs.add(blog2);
+        
+        //user.setBlogs(blogs);
+        
+        session.save(user);
+        session.save(blog);
+        session.save(blog2);
+        session.getTransaction().commit();
+        session.close();
+	}
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+ 
+ <hibernate-mapping>
+   <class name="com.SpringBlog.beans.Likes" table="Likes">
+      <meta attribute="class-description">
+         This class contains the likes information! 
+      </meta>
+      <id name="id" type="long" column="LikeId">
+         <generator class="native"/>
+      </id>
+      <property name="time" column="Time" type="date" />
+      <many-to-one name="blogId" class="com.SpringBlog.beans.Blog" column="BlogId" unique="false" not-null="true" cascade="all" />
+      <many-to-one name="userId" class="com.SpringBlog.beans.User" column="UserId" unique="false" not-null="true" cascade="all" />
+   </class>
+</hibernate-mapping>

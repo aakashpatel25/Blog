@@ -1,0 +1,262 @@
+package com.Blog.Dao.test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import com.Blog.Dao.BlogDao;
+import com.Blog.Dao.UsersDao;
+import com.Blog.Service.IBlog;
+import com.Blog.Service.IUsers;
+import com.Blog.beans.Blog;
+import com.Blog.beans.Users;
+
+public class BlogDaoTest {
+	/**
+	 * Blog dao.
+	 */
+	private IBlog blogDao;
+	
+	/**
+	 * User dao.
+	 */
+	private IUsers userDao;
+
+	/**
+	 * User object.
+	 */
+	private Users user;
+	
+	/**
+	 * Constant for username.
+	 */
+	private static final String USER_NAME = "Writer";
+	
+	/**
+	 * Constant for password.
+	 */
+	private static final String PASSWORD = "admin123";
+	
+	/**
+	 * Constant for first name of user.
+	 */
+	private static final String FIRST_NAME = "User";
+	
+	/**
+	 * Constant for last name of user.
+	 */
+	private static final String LAST_NAME = "Users";
+	
+	/**
+	 * Constant for email of user.
+	 */
+	private static final String EMAIL = "admin@admin.com";
+	
+	/**
+	 * List of constants for Blog titles. 
+	 */
+	private static final String[] TITLES = {"Blog 1","Blog 2","Blog 3", "Blog 4","Blog 5"};
+	
+	/**
+	 * List of constants for Post titles.
+	 */
+	private static final String[] POSTS ={"Post 1","Post 2","Post 3","Post 4","Post 5"};
+	
+	
+	
+	/**
+	 * Constructor of the test class.
+	 */
+	public BlogDaoTest(){
+		user = new Users(USER_NAME,PASSWORD,FIRST_NAME,LAST_NAME,EMAIL);
+		userDao = new UsersDao();
+		blogDao = new BlogDao();
+	}
+	
+	/**
+	 * Setup the environment before starting the testing.
+	 */
+	@BeforeClass
+	public static void setUp(){
+		userDao.createNewUser(user);
+	}
+	
+	/**
+	 * To create a single blog to be inserted into database.
+	 * @return Blog
+	 * 		Newly created blog.
+	 */
+	private Blog createOneBlog(){
+		Blog blog = new Blog(user,TITLES[0],POSTS[0]);
+		return blog;
+	}
+	
+	/**
+	 * To create list of blogs to be inserted into databse.
+	 * @return List<Blog>
+	 * 		List containing blogs.
+	 */
+	private List<Blog> createBlogList(){
+		List<Blog> blogList = new ArrayList<Blog>();
+		for(int i=0;i<5;i++){
+			blogList.add(new Blog(user,TITLES[i],POSTS[i]));
+		}
+		return blogList;
+	}
+	
+	/**
+	 * Check if the insert blog function is working properly.
+	 */
+	@Test
+	public void testInsertBlog() {
+		boolean result = blogDao.insertBlog(createOneBlog());
+		long blogId = blogDao.getBlogId(user, TITLES[0]);
+		Blog blog = blogDao.getBlog(blogId);
+		blogDao.deleteBlog(blogId);
+		assertEquals(blog.getPost(),POSTS[0]);
+		assertEquals(blog.getTitle(),TITLES[0]);
+		assertTrue(blogId>0);
+		assertTrue(result);
+	}
+	
+	/**
+	 * To check if the editTitle works fine!
+	 */
+	@Test
+	public void testEditTitle(){
+		blogDao.insertBlog(createOneBlog());
+		long blogId = blogDao.getBlogId(user, TITLES[0]);
+		boolean result = blogDao.editTitle(TITLES[1], blogId);
+		Blog blog = blogDao.getBlog(blogId);
+		blogDao.deleteBlog(blogId);
+		assertNotNull(blog);
+		assertEquals(blog.getTitle(),TITLES[1]);
+		assertTrue(result);
+	}
+	
+	/**
+	 * To check if the editPost of blogDao works fine.
+	 */
+	@Test
+	public void testEditPost(){
+		blogDao.insertBlog(createOneBlog());
+		long blogId = blogDao.getBlogId(user, TITLES[0]);
+		boolean result = blogDao.editPost(POSTS[1], blogId);
+		Blog blog = blogDao.getBlog(blogId);
+		blogDao.deleteBlog(blogId);
+		assertNotNull(blog);
+		assertEquals(blog.getPost(),POSTS[1]);
+		assertTrue(result);
+	}
+	
+	/**
+	 * To check if the getBlog function of the blogDao works fine when supplied with zero as blog id.
+	 */
+	@Test
+	public void testGetBlogNull(){
+		Blog blog = blogDao.getBlog(0);
+		assertNull(blog);
+	}
+	
+	/**
+	 * To check if the getBlog function of the blogDao works fine.
+	 */
+	@Test
+	public void testGetBlog(){
+		boolean result = blogDao.insertBlog(createOneBlog());
+		long blogId = blogDao.getBlogId(user, TITLES[0]);
+		Blog blog = blogDao.getBlog(blogId);
+		blogDao.deleteBlog(blogId);
+		assertEquals(blog.getPost(),POSTS[0]);
+		assertEquals(blog.getTitle(),TITLES[0]);
+		assertTrue(blogId>0);
+		assertTrue(result);
+	}
+	
+	/**
+	 * Test if the delete blog function works properly given no blog exists.
+	 */
+	@Test
+	public void testDeleteBlogDoesNotExist(){
+		boolean result = blogDao.deleteBlog(0);
+		assertFalse(result);
+	}
+	
+	/**
+	 * Test if the delete blog function works properly.
+	 */
+	@Test
+	public void testDeleteBlog(){
+		blogDao.insertBlog(createOneBlog());
+		long blogId = blogDao.getBlogId(user, TITLES[0]);
+		boolean result = blogDao.deleteBlog(blogId);
+		Blog blog = blogDao.getBlog(blogId);
+		assertNull(blog);
+		assertTrue(result);
+	}
+	
+	/**
+	 * Test if the getBlogId works properly when wrong username and title is supplied.
+	 */
+	@Test
+	public void testGetBlogIdWrongUserNameAndTitle(){
+		long blogId = blogDao.getBlogId(null, "Sampel title");
+		assertEquals(blogId,0);
+	}
+	
+	/**
+	 * Test if the getBlogId works properly.
+	 */
+	@Test
+	public void testGetBlogId(){
+		blogDao.insertBlog(createOneBlog());
+		long blogId = blogDao.getBlogId(user, TITLES[0]);
+		blogDao.deleteBlog(blogId);
+		assertTrue(blogId>0);		
+	}
+	
+	/**
+	 * To check if the fetchFiveRecentBlogs with no blogs in the database works properly.
+	 */
+	@Test
+	public void testFetchFiveRecentBlogsWithNoBlogs(){
+		List<Blog> blogList = blogDao.fetchFiveRecentBlogs();
+		assertNull(blogList);
+	}
+	
+	/**
+	 * To check if the fetchBlogs works properly.
+	 */
+	@Test
+	public void testFetchFiveRecentBlogs(){
+		List<Blog> blogList = createBlogList();
+		for(int i=0;i<5;i++){
+			blogDao.insertBlog(blogList.get(i));
+		}
+		List<Blog> resultList = blogDao.fetchFiveRecentBlogs();
+		assertNotNull(resultList);
+		assertEquals(resultList.size(),5);
+		for(int i=0;i<5;i++){
+			blogDao.deleteBlog(blogDao.getBlogId(resultList.get(i).getUser(), resultList.get(i).getTitle()));
+		}
+	}
+	
+	/**
+	 * To clean up the environment after testing the code.
+	 */
+	@AfterClass
+	public void cleanUp(){
+		userDao.deleteUser(userDao.findUserId(USER_NAME));
+	}
+}

@@ -1,0 +1,86 @@
+package com.Blog.Service;
+
+import com.Blog.beans.Users;
+
+public interface IUsers {
+	/**
+	 * To register new user.
+	 * 
+	 * @param user
+	 *            User user.
+	 * @return boolean True of False to indicate the Success of Failure
+	 */
+	public boolean createNewUser(Users user);
+
+	/**
+	 * To change the password of the given user.
+	 * 
+	 * @param userId
+	 *            userId for which the password is to be changed.
+	 * @param newPassword
+	 *            New password that is to be set for the user.
+	 * @return boolean True of False based on the Success of Failure of the operation.
+	 */
+	public boolean changePassword(long userId, String newPassword);
+
+	/**
+	 * To change the email address of the given user.
+	 * 
+	 * @param userId
+	 *            UserId of the user whose email has to be changed.
+	 * @param newEmail
+	 *            Updated email address of the User.
+	 * @return boolean True or False based on the Success of Failure of the operation.
+	 */
+	public boolean changeEmail(long userId, String newEmail);
+
+	/**
+	 * To update the personal information of the user.
+	 * 
+	 * @param userId
+	 *            UserId of the user whose personal information has to be
+	 *            updated.
+	 * @param fName
+	 *            Updated first name of the user whose personal information has too be changed.
+	 * @param lName
+	 *            Updated last name of the user whose personal information is to be changed.
+	 * @return boolean True of False based on the Success or Failure of the operation.
+	 */
+	public boolean updateFirstAndLastName(long userId, String fName,String lName);
+
+	/**
+	 * To check the userId of the user given the username.
+	 * 
+	 * @param userName
+	 *            Username of the user whose userId is to be found.
+	 * @return long UserId of the user.
+	 */
+	public long findUserId(String userName);
+
+	/**
+	 * To fetch the likes, comments and blogs of a given user.
+	 * 
+	 * @param user
+	 *            User for whom the likes, comments and blogs are to be fetched.
+	 * @return User The likes, comments and blog fetched object.
+	 */
+	public User getLikesCommentsAndBlogs(User user);
+	
+	/**
+	 * To deactivate an account of a particular user.
+	 * 
+	 * @param userId
+	 *            userId of the user whose account is to be deactivated.
+	 * @return boolean True or false depending on the success or failure of the operation.
+	 */
+	public boolean deleteUser(long userId);
+	
+	/**
+	 * To get user profile of a user.
+	 * 
+	 * @param userName
+	 *            User name of the user form whom the profile is to be fetched.
+	 * @return User Profile of the user.
+	 */
+	public User getUser(String userName);
+}

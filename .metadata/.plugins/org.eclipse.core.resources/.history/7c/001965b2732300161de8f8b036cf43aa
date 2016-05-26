@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+ 
+ <hibernate-mapping>
+   <class name="com.Blog.beans.Users" table="Users">
+      <meta attribute="class-description">
+         This class contains the user information! 
+      </meta>
+      <id name="userId" type="long" column="user_id">
+         <generator class="native"/>
+      </id>
+      <property name="username" column="username" unique="true" type="string"/>
+      <property name="password" column="password" type="string"/>
+      <property name="firstName" column="first_name" type="string"/>
+      <property name="lastName" column="last_name" type="string"/>
+      <property name="email" column="email" unique="true" type="string"/>
+      <property name="userSince" column="signupDate" type="date"/>
+      
+      <set name="blogs" inverse="true" cascade="all">
+            <key column="user_id" not-null="true" />
+            <one-to-many class="com.Blog.beans.Blog"/>
+      </set>
+      
+      <set name="commentsList" inverse="true" cascade="save-update">
+            <key column="user_id" not-null="true" />
+            <one-to-many class="com.Blog.beans.Comments"/>
+      </set>
+      
+      <set name="likesList" inverse="true" cascade="all">
+            <key column="user_id" not-null="true" />
+            <one-to-many class="com.Blog.beans.Likes"/>
+      </set>
+      
+   </class>
+</hibernate-mapping>

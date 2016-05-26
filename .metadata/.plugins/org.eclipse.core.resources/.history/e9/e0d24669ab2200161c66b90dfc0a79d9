@@ -1,0 +1,7 @@
+package com.Blog.Dao;
+
+import com.Blog.Service.IBlog;
+
+public class BlogDao implements IBlog {
+
+}

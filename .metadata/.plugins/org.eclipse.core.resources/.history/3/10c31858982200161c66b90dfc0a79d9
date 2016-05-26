@@ -1,0 +1,5 @@
+package com.Blog.Hibernate;
+
+public class HibernateDao {
+
+}

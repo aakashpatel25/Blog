@@ -1,0 +1,177 @@
+package com.Blog.Dao;
+
+import java.util.Date;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
+import com.Blog.Hibernate.HibernateDao;
+import com.Blog.Service.IUsers;
+import com.Blog.beans.Users;
+
+public class UsersDao implements IUsers{
+	public static SessionFactory factory;
+	
+	/**
+	 * UserDao constructor.
+	 */
+	public UsersDao() {
+		factory = HibernateDao.openSession();
+	}
+
+	/**
+	 * To add new user to the database.
+	 * 
+	 * @param user
+	 * 			User object for the user which is to be added in the database.
+	 */
+	@Override
+	public boolean createNewUser(Users user) {
+		Session session = factory.openSession();
+		Transaction tx = null;
+		Long id = new Long(0);
+		try {
+			Date time = new Date();
+			tx = session.beginTransaction();
+			user.setUserSince(time);
+			id = (Long) session.save(user);
+			tx.commit();
+		} catch (HibernateException e) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return id.longValue() > 0;
+	}
+
+	/**
+	 * To change a password of the give userId.
+	 * 
+	 * @param userId
+	 * 			UserId of the user for whom the password is to be changed.
+	 * @param newPassword
+	 * 			New password of the user.
+	 */
+	@Override
+	public boolean changePassword(long userId, String newPassword) {
+		Session session = factory.openSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			Users user = (Users) session.get(Users.class, userId);
+			user.setPassword(newPassword);
+			session.update(user);
+			tx.commit();
+		} catch (HibernateException e) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return false;
+	}
+
+	/**
+	 * To change the email address of the given user.
+	 * @param userId
+	 * 			UserId of the user for whom the email is to be changed.
+	 * @param newEmail
+	 * 			Updated email address of the user.
+	 * @return boolean
+	 * 			True or false depending on the success of the operation.
+	 */
+	@Override
+	public boolean changeEmail(long userId, String newEmail) {
+		Session session = factory.openSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			Users user = (Users) session.get(Users.class, userId);
+			user.setEmail(newEmail);
+			session.update(user);
+			tx.commit();
+		} catch (HibernateException e) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return true;
+	}
+
+	/**
+	 * To update the first and last name of the user.
+	 * @param userId
+	 * 			User for whom the first and last name is to be modified.
+	 * @param fName
+	 * 			Updated first name of the user.
+	 * @param lName
+	 * 			Update last name of the user.
+	 * @return boolean
+	 * 			True or false depending on the success of the operation.
+	 */
+	@Override
+	public boolean updateFirstAndLastName(long userId, String fName,
+			String lName) {
+		Session session = factory.openSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			Users user = (Users) session.get(Users.class, userId);
+			user.setFirstName(fName);
+			user.setLastName(lName);
+			session.update(user);
+			tx.commit();
+		} catch (HibernateException e) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			e.printStackTrace();
+		}
+		return true;
+	}
+
+	/**
+	 * Find the userId of a user.
+	 * @param userName
+	 * 		Username of the user.
+	 * @return long
+	 * 		UserId of the user.
+	 */
+	@Override
+	public long findUserId(String userName) {
+		try{
+			Session session = factory.openSession();
+			Long userId = (Long) session.createQuery("Select u.userId from User as u where u.username = :userName").setParameter("userName", userName).uniqueResult();
+			session.close();
+			return userId.longValue();
+		}catch(NullPointerException e){
+			return 0;
+		}
+	}
+
+	@Override
+	public boolean deleteUser(long userId) {
+		Session session = factory.openSession();
+		int result = session.createQuery("Delete User where userId = :userId").setParameter("userId", userId).executeUpdate();
+		session.close();
+		return result>0;
+	}
+
+	@Override
+	public Users getUser(String userName) {
+		Session session = factory.openSession();
+		Users user = (Users) session.createQuery("From User where username = :username").setParameter("username",userName).uniqueResult();
+		//user = getLikesCommentsAndBlogs(user);
+		return user;
+	}
+}

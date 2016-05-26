@@ -1,0 +1,205 @@
+package com.Blog.beans;
+
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+public class Blog {
+
+	/**
+	 * Unique blog identifier
+	 */
+	long blogId;
+
+	/**
+	 * Username of the owner of the blog.
+	 */
+	Users user;
+
+	/**
+	 * Title of the blog.
+	 */
+	String title;
+
+	/**
+	 * Content of the blog.
+	 */
+	String post;
+
+	/**
+	 * Timestamp when the blog was created/published.
+	 */
+	Date timeStamp;
+
+	/**
+	 * Comments on the blog.
+	 */
+	Set<Comments> commentsList;
+
+	/**
+	 * Likes on a blog.
+	 */
+	Set<Likes> likesList;
+
+	/**
+	 * Blog constructor.
+	 * 
+	 * @param usr
+	 *            User object of the user who wrote the blog.
+	 * @param tit
+	 *            Title of the blog.
+	 * @param data
+	 *            Content of the blog
+	 * @return Blog Blog object.
+	 */
+	public Blog(Users usr, String tit, String data) {
+		user = usr;
+		title = tit;
+		post = data;
+		Date time = new Date();
+		timeStamp = time;
+		commentsList = new HashSet<Comments>();
+		likesList = new HashSet<Likes>();
+	}
+
+	/**
+	 * Default constructor for the blog
+	 */
+	public Blog() {
+
+	}
+
+	/**
+	 * Get the unique identifier of the blog.
+	 * 
+	 * @return long. Identifier of the blog.
+	 */
+	public long getBlogId() {
+		return blogId;
+	}
+
+	/**
+	 * To set the ID for the blog. This is unique.
+	 * 
+	 * @param id
+	 *            Long id.
+	 */
+	public void setBlogId(long id) {
+		this.blogId = id;
+	}
+
+	/**
+	 * Return the username of the user owning the blog.
+	 * 
+	 * @return String username of the user.
+	 */
+	public Users getUser() {
+		return user;
+	}
+
+	/**
+	 * To set userId of the user.
+	 * 
+	 * @param userId
+	 *            Long userId
+	 */
+	public void setUser(Users usr) {
+		this.user = usr;
+	}
+
+	/**
+	 * Get the timestamp when the blog was published.
+	 * 
+	 * @return Date Timestamp of the post.
+	 */
+	public Date getTimeStamp() {
+		return timeStamp;
+	}
+
+	/**
+	 * To set the timestamp for the blog creation!
+	 * 
+	 * @param timeStamp
+	 *            Date timeStamp
+	 */
+	public void setTimeStamp(Date timeStamp) {
+		this.timeStamp = timeStamp;
+	}
+
+	/**
+	 * Returns the title of the blog.
+	 * 
+	 * @return String Title of the blog.
+	 */
+	public String getTitle() {
+		return title;
+	}
+
+	/**
+	 * To set the title of the blog.
+	 * 
+	 * @param title
+	 *            Title of the blog.
+	 */
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	/**
+	 * Returns the content of the blog.
+	 * 
+	 * @return String contents of the blog.
+	 */
+	public String getPost() {
+		return post;
+	}
+
+	/**
+	 * Sets the contents of the post.
+	 * 
+	 * @param post
+	 *            Contents of the post.
+	 */
+	public void setPost(String post) {
+		this.post = post;
+	}
+
+	/**
+	 * Returns the comment associated with the blog.
+	 * 
+	 * @return List<Comment> Comments associated with the blog.
+	 */
+	public Set<Comments> getCommentList() {
+		return commentsList;
+	}
+
+	/**
+	 * Sets the comment on the blog.
+	 * 
+	 * @param commentList
+	 *            List<Comments> that are written on the blogs.
+	 */
+	public void setCommentList(Set<Comments> commentList) {
+		this.commentsList = commentList;
+	}
+
+	/**
+	 * Returns the number of the likes on the blog.
+	 * 
+	 * @return long number of the likes on the blog.
+	 */
+	 public Set<Likes> getLikes() {
+		 return likesList; 
+	 }
+
+	/**
+	 * Set the number of the likes on the blog.
+	 * 
+	 * @param Set<likes>
+	 *            List of likes.
+	 */
+	 public void setLikes(Set<Likes> likes) { 
+		 this.likesList = likes; 
+	 }
+}

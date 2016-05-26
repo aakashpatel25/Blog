@@ -1,0 +1,5 @@
+package com.Blog.Dao;
+
+public class Likes {
+
+}

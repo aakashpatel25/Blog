@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+ 
+ <hibernate-mapping>
+   <class name="com.Blog.beans.Blog" table="Blog">
+      <meta attribute="class-description">
+         This class contains the blog information! 
+      </meta>
+      <id name="blogId" type="long" column="blog_id">
+               <generator class="native"/>
+      </id>
+      <property name="title" column="title" type="string" />
+      <property name="post" column="post" type="string" />
+      <property name="timeStamp" column="pubDate" type="date" />
+      <many-to-one name="user" class="Users"
+            column="user_id" not-null="true"/>
+   </class>
+</hibernate-mapping>

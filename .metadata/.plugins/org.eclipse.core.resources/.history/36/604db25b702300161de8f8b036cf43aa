@@ -1,0 +1,65 @@
+package com.Blog.Service;
+
+import com.Blog.beans.Blog;
+import com.Blog.beans.Comments;
+import com.Blog.beans.Users;
+
+public interface IComments {
+
+	/**
+	 * Add comment to the blog.
+	 * 
+	 * @param blogId
+	 *            Id of the blog on which the comment is to be added.
+	 * @return boolean Failure of Success.
+	 */
+	public boolean addComment(Comments comment);
+
+	/**
+	 * To edit the comment.
+	 * 
+	 * @param commentId
+	 *            CommentId for the comment which is to be edited.
+	 * @return boolean True or False indicating the Scucess of Failure.
+	 */
+	public boolean editComment(long commentId, String newComment);
+
+	/**
+	 * To delete a given comment on a blog by a particular user.
+	 * 
+	 * @param commentId
+	 *            Id of the comment.
+	 * @return boolean True or false depending on the success of failure of the operation.
+	 */
+	public boolean deleteComment(long commentId);
+
+	/**
+	 * To delete all the comments on a given blog.
+	 * 
+	 * @param Blog
+	 *            Blog on which all the comments are to be deleted.
+	 * @return boolean Depending on the success of failure of the operation.
+	 */
+	public boolean deleteBlogComments(Blog blog);
+
+	/**
+	 * To get comment id of a particular comment.
+	 * 
+	 * @param user
+	 *            User who wrote the comment.
+	 * @param blog
+	 *            Blog on which the comment was written.
+	 * @return long CommentId of the comment.
+	 */
+	public long getCommentId(Users user, Blog blog);
+	
+	/**
+	 * To get comments object.
+	 * 
+	 * @param commentId
+	 * 				CommentId of the comment that is to be fetched.
+	 * @return Comments
+	 * 				Comment Object.
+	 */				
+	public Comments getComment(long commentId);
+}

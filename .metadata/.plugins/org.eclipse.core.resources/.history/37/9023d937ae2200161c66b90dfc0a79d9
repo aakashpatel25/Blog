@@ -1,0 +1,5 @@
+package com.Blog.beans;
+
+public class Comments {
+
+}

@@ -1,0 +1,90 @@
+package com.Blog.beans;
+
+public class Likes {
+	/**
+	 * Like Id.
+	 */
+	long id;
+	
+	/**
+	 * User id of the person who liked the post.
+	 */
+	long userId;
+	
+	/**
+	 * BlogId of the blog that was liked by the user.
+	 */
+	long blogId;
+	
+	/**
+	 * Timestamp wjem the activity was performed
+	 */
+	Date time;
+	
+	/**
+	 * Default Constructor.
+	 */
+	public Likes(){
+		
+	}
+	
+	public Likes(long blogId,long userId,Date date){
+		this.blogId = blogId;
+		this.userId = userId;
+		this.time = date;
+	}
+
+	/**
+	 * Gets the userId of the user.
+	 * @return long
+	 * 		userId of the user.
+	 */
+	public long getUserId() {
+		return userId;
+	}
+	
+	/**
+	 * Gets the blogId of the blog that was being liked by the user
+	 * @return long
+	 * 		BlogId of the blog.
+	 */
+	public long getBlogId() {
+		return blogId;
+	}
+
+	/**
+	 * Returns the time when the activity was performed.
+	 * @return Date
+	 * 		Datetime of the activity.
+	 */
+	public Date getTime() {
+		return time;
+	}
+
+	/**
+	 * Sets the time of the activity.
+	 * @param time
+	 * 			DateTime of the activity!
+	 */
+	public void setTime(Date time) {
+		this.time = time;
+	}
+	
+	/**
+	 * Set the id of the like.
+	 * @param id
+	 * 		Id of the like.
+	 */
+	public void setId(long id){
+		this.id = id;
+	}
+	
+	/**
+	 * Returns the like id.
+	 * @return long
+	 * 			Id of the like.
+	 */
+	public long getId(){
+		return id;
+	}
+}

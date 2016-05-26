@@ -1,0 +1,56 @@
+package com.Blog.Dao.test;
+
+import org.junit.Before;
+
+import com.Blog.Dao.BlogDao;
+import com.Blog.Dao.UsersDao;
+import com.Blog.Service.IBlog;
+import com.Blog.Service.IUsers;
+import com.Blog.beans.Blog;
+import com.Blog.beans.Users;
+
+public class BlogDaoTest {
+	private IBlog blogDao;
+	
+	private IUsers userDao;
+
+	private static Users user;
+	
+	private static String USER_NAME = "Writer";
+	
+	private static String PASSWORD = "admin123";
+	
+	private static String FIRST_NAME = "User";
+	
+	private static String LAST_NAME = "Users";
+	
+	private static String EMAIL = "admin@admin.com";
+	
+	private static String[] TITLES = {"Blog 1","Blog 2","Blog 3", "Blog 4","Blog 5"};
+	
+	private static String[] POSTS ={"Post 1","Post 2","Post 3","Post 4","Post 5"};
+	
+	/**
+	 * Setup the environment before starting the testing.
+	 */
+	public BlogDaoTest(){
+		user = new Users(USER_NAME,PASSWORD,FIRST_NAME,LAST_NAME,EMAIL);
+		userDao = new UsersDao();
+		blogDao = new BlogDao();
+	}
+	
+	@Before
+	public void setUp(){
+		userDao.createNewUser(user);
+	}
+	
+	/**
+	 * To create a single blog to be inserted into database.
+	 * @return Blog
+	 * 		Newly created blog.
+	 */
+	private Blog createOneBlog(){
+		
+		return blog;
+	}
+}

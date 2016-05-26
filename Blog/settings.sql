@@ -1,0 +1,9 @@
+USE [master]
+GO
+IF NOT EXISTS ( SELECT * FROM [master].[sys].[server_principals] WHERE name = N'app_user' )
+BEGIN
+	CREATE LOGIN [app_user] WITH PASSWORD=N'password', DEFAULT_DATABASE=[master], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF
+END
+GO
+ALTER DATABASE [blog] SET READ_COMMITTED_SNAPSHOT ON 
+GO

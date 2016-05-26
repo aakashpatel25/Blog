@@ -1,0 +1,33 @@
+package com.Blog.Dao.test;
+
+import com.Blog.Dao.BlogDao;
+import com.Blog.Service.IBlog;
+import com.Blog.beans.Blog;
+
+public class BlogDaoTest {
+	private IBlog blogDao;
+
+	private static String USER_NAME = "Writer";
+	
+	private static String[] TITLES = {"Blog 1","Blog 2","Blog 3", "Blog 4","Blog 5"};
+	
+	private static String[] POSTS ={"Post 1","Post 2","Post 3","Post 4","Post 5"};
+	
+	/**
+	 * Setup the environment before starting the testing.
+	 */
+	public BlogDaoTest(){
+		blogDao = new BlogDao();
+	}
+	
+	
+	/**
+	 * To create a single blog to be inserted into database.
+	 * @return Blog
+	 * 		Newly created blog.
+	 */
+	private Blog createOneBlog(){
+		
+		return blog;
+	}
+}

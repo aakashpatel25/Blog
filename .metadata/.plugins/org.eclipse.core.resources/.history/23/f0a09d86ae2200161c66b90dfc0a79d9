@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+ 
+ <hibernate-mapping>
+   <class name="com.SpringBlog.beans.Comment" table="Comment">
+      <meta attribute="class-description">
+         This class contains the comment information! 
+      </meta>
+      <id name="commentId" type="long" column="CommentId">
+         <generator class="native"/>
+      </id>
+      <property name="timeStamp" column="Time" type="date" />
+      <property name="comment" column="Comment" type="string" />
+      <many-to-one name="id" class="com.SpringBlog.beans.Blog" column="BlogId" unique="false" not-null="true" cascade="all" />
+      <many-to-one name="userId" class="com.SpringBlog.beans.User" column="UserId" unique="false" not-null="true" cascade="all" />
+   </class>
+</hibernate-mapping>
