@@ -1,0 +1,112 @@
+package com.Blog.Management;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.Blog.Dao.BlogDao;
+import com.Blog.Dao.UsersDao;
+import com.Blog.ManagementService.IBlogManagementService;
+import com.Blog.Service.IBlog;
+import com.Blog.Service.ILikes;
+import com.Blog.Service.IUsers;
+import com.Blog.beans.Blog;
+import com.Blog.beans.Users;
+
+public class BlogManagement implements IBlogManagementService {
+
+	private IBlog blogDao;
+
+	private IUsers userDao;
+	
+	private ILikes likeDao;	
+
+	public BlogManagement() {
+		blogDao = new BlogDao();
+		userDao = new UsersDao();
+	}
+
+	private List<String> createList(String... args) {
+		List<String> list = new ArrayList<String>();
+		for (String arg : args) {
+			list.add(arg);
+		}
+		return list;
+	}
+
+	private boolean verifyTokens(List<String> verification) {
+		for (String var : verification) {
+			if (var.isEmpty() || var == null) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public boolean createBlogPost(String username, String title, String post) {
+		if (!verifyTokens(createList(username, title, post))) {
+			return false;
+		}
+		Users user = userDao.getUser(username);
+		if (user == null) {
+			return false;
+		} else {
+			Blog blog = new Blog(user, title, post);
+			return blogDao.insertBlog(blog);
+		}
+	}
+
+	@Override
+	public boolean editBlogTitle(String username, String title, String newTitle) {
+		if (!verifyTokens(createList(username, title, newTitle))) {
+			return false;
+		}
+		long blogId = blogDao.getBlogId(userDao.getUser(username), title);
+		if (blogId == 0) {
+			return false;
+		}
+		return blogDao.editTitle(newTitle, blogId);
+	}
+
+	@Override
+	public boolean editBlogPost(String username, String title, String editedPost) {
+		if (!verifyTokens(createList(username, title, editedPost))) {
+			return false;
+		}
+		long blogId = blogDao.getBlogId(userDao.getUser(username), title);
+		if (blogId == 0) {
+			return false;
+		}
+		return blogDao.editPost(editedPost, blogId);
+	}
+
+	@Override
+	public boolean deletePost(String username, String title) {
+		if (!verifyTokens(createList(username, title))) {
+			return false;
+		}
+		long blogId = blogDao.getBlogId(userDao.getUser(username), title);
+		if (blogId == 0) {
+			return false;
+		}
+		return blogDao.deleteBlog(blogId);
+	}
+
+	@Override
+	public List<Blog> loadBlogs() {
+		return blogDao.fetchFiveRecentBlogs();
+	}
+
+	@Override
+	public boolean likeBlog(String author, String title, String username) {
+		if (!verifyTokens(createList(username, title,author))) {
+			return false;
+		}
+		Blog blog = blogDao.getBlog(blogDao.getBlogId(userDao.getUser(author), title));
+		if(blog==null){
+			return false;
+		}
+		
+		return false;
+	}
+}

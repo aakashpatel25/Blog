@@ -1,0 +1,65 @@
+package com.Blog.ManagementService;
+
+import java.util.List;
+
+import com.Blog.beans.Blog;
+
+public interface IBlogManagementService {
+
+	/**
+	 * To create a blog post.
+	 * 
+	 * @param username
+	 *            Username of the user writing the blog.
+	 * @param title
+	 *            Title of the post.
+	 * @param post
+	 *            Content of the post.
+	 * @return boolean If the post was successfully saved.
+	 */
+	public boolean createBlogPost(String username, String title, String post);
+
+	/**
+	 * To change the title of the blog post.
+	 * 
+	 * @param username
+	 *            Username of the user who wrote the post.
+	 * @param title
+	 *            Current title of the post.
+	 * @param newTitle
+	 *            New title of the post.
+	 * @return boolean Depending on success or failure of modification of title.
+	 */
+	public boolean editBlogTitle(String username, String title, String newTitle);
+
+	/**
+	 * To edit the blog post.
+	 * 
+	 * @param username
+	 *            Username of the user writing the post.
+	 * @param title
+	 *            Title of the post.
+	 * @param editedPost
+	 *            Modified post.
+	 * @return boolean Success or failure of modication.
+	 */
+	public boolean editBlogPost(String username, String title, String editedPost);
+
+	/**
+	 * To delete a blog post.
+	 * 
+	 * @param username
+	 *            Username of the user who wrote the post.
+	 * @param title
+	 *            Title of the post.
+	 * @return boolean If the post was deleted successfully.
+	 */
+	public boolean deletePost(String username, String title);
+
+	/**
+	 * To load the most recently written posts.
+	 * 
+	 * @return List<Blog> List of recently written posts.
+	 */
+	public List<Blog> loadBlogs();
+}

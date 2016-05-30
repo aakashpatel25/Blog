@@ -1,0 +1,5 @@
+package com.Blog.ManagementService;
+
+public interface IBlogManagementService {
+
+}

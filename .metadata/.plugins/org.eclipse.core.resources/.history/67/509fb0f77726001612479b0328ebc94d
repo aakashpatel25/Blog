@@ -1,0 +1,17 @@
+package com.Blog.ManagementService;
+
+public interface IBlogManagementService {
+	
+	/**
+	 * To create a blog post.
+	 * @param username
+	 * 			Username of the user writing the blog.
+	 * @param title
+	 * 			Title of the post.
+	 * @param post
+	 * 			Content of the post.
+	 * @return boolean
+	 * 			If the post was successfully saved.
+	 */
+	public boolean createBlogPost(String username,String title,String post);
+}

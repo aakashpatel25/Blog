@@ -1,0 +1,10 @@
+package com.Blog.Management;
+
+public class BlogManagement {
+
+	private IBlog blogDao;
+	
+	private IUsers userDao;
+	
+	
+}

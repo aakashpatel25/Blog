@@ -1,0 +1,31 @@
+package com.Blog.Management;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.Blog.Service.IBlog;
+import com.Blog.Service.IUsers;
+
+public class BlogManagement {
+
+	private IBlog blogDao;
+	
+	private IUsers userDao;
+	
+	private List<String> createList(String... args) {
+		List<String> list = new ArrayList<String>();
+		for (String arg : args) {
+			list.add(arg);
+		}
+		return list;
+	}
+
+	private boolean verifyTokens(List<String> verification) {
+		for (String var : verification) {
+			if (var.isEmpty() || var == null) {
+				return false;
+			}
+		}
+		return true;
+	}
+}
