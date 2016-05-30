@@ -1,0 +1,5 @@
+package com.Blog.manageservices;
+
+public class UserManagementService implements IUserManagement{
+
+}

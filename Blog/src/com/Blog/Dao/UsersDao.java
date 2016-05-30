@@ -21,13 +21,6 @@ public class UsersDao implements IUsers {
 		factory = HibernateDao.openSession();
 	}
 
-	/**
-	 * To add new user to the database.
-	 * 
-	 * @param user
-	 *            User object for the user which is to be added in the database.
-	 * @return boolean True or false depending on success of the operation.
-	 */
 	@Override
 	public boolean createNewUser(Users user) {
 		Session session = factory.openSession();
@@ -50,15 +43,6 @@ public class UsersDao implements IUsers {
 		return id.longValue() > 0;
 	}
 
-	/**
-	 * To change a password of the give userId.
-	 * 
-	 * @param userId
-	 *            UserId of the user for whom the password is to be changed.
-	 * @param newPassword
-	 *            New password of the user.
-	 * @return boolean True or false depending on the success of the operation.
-	 */
 	@Override
 	public boolean changePassword(long userId, String newPassword) {
 		Session session = factory.openSession();
@@ -80,15 +64,6 @@ public class UsersDao implements IUsers {
 		return false;
 	}
 
-	/**
-	 * To change the email address of the given user.
-	 * 
-	 * @param userId
-	 *            UserId of the user for whom the email is to be changed.
-	 * @param newEmail
-	 *            Updated email address of the user.
-	 * @return boolean True or false depending on the success of the operation.
-	 */
 	@Override
 	public boolean changeEmail(long userId, String newEmail) {
 		Session session = factory.openSession();
@@ -110,17 +85,6 @@ public class UsersDao implements IUsers {
 		return true;
 	}
 
-	/**
-	 * To update the first and last name of the user.
-	 * 
-	 * @param userId
-	 *            User for whom the first and last name is to be modified.
-	 * @param fName
-	 *            Updated first name of the user.
-	 * @param lName
-	 *            Update last name of the user.
-	 * @return boolean True or false depending on the success of the operation.
-	 */
 	@Override
 	public boolean updateFirstAndLastName(long userId, String fName, String lName) {
 		Session session = factory.openSession();
@@ -141,13 +105,6 @@ public class UsersDao implements IUsers {
 		return true;
 	}
 
-	/**
-	 * Find the userId of a user.
-	 * 
-	 * @param userName
-	 *            Username of the user.
-	 * @return long UserId of the user.
-	 */
 	@Override
 	public long findUserId(String userName) {
 		try {
@@ -162,14 +119,6 @@ public class UsersDao implements IUsers {
 		}
 	}
 
-	/**
-	 * To delete a particular user.
-	 * 
-	 * @param userId
-	 *            UserId of the user that is to be deleted.
-	 * @return boolean True or false depending on the success of failure of the
-	 *         operation.
-	 */
 	@Override
 	public boolean deleteUser(long userId) {
 		Session session = factory.openSession();
@@ -179,14 +128,6 @@ public class UsersDao implements IUsers {
 		return result > 0;
 	}
 
-	/**
-	 * To get the user information in terms of Users object.
-	 * 
-	 * @param userName
-	 *            Username of the user for whom the information is to be
-	 *            fetched.
-	 * @return Users Users object representing a user.
-	 */
 	@Override
 	public Users getUser(String userName) {
 		Session session = factory.openSession();

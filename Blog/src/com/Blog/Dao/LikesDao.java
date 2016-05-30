@@ -23,15 +23,6 @@ public class LikesDao implements ILikes {
 		factory = HibernateDao.openSession();
 	}
 
-	/**
-	 * To setLike on a particular blog.
-	 * 
-	 * @param Blog
-	 *            Blog on which is liked.
-	 * @param User
-	 *            User who liked the blog.
-	 * @return boolean True or False depending on success or failure of the operation.
-	 */
 	@Override
 	public boolean setLikes(Blog blog, Users user) {
 		Likes like = new Likes(blog, user);
@@ -53,13 +44,6 @@ public class LikesDao implements ILikes {
 		return likeId.longValue() > 0;
 	}
 
-	/**
-	 * To get likes on a particular blog.
-	 * 
-	 * @param Blog
-	 *            Blog for which the likes are to be retrieved.
-	 * @return Long Number of likes on a particular blog.
-	 */
 	@Override
 	public long getLikesOnBlog(Blog blog) {
 		Session session = factory.openSession();
@@ -69,13 +53,6 @@ public class LikesDao implements ILikes {
 		return likes;
 	}
 
-	/**
-	 * To get the list of users that liked the blog.
-	 * 
-	 * @param Blog
-	 *            Blog for which the list of users liked the blog is to be retrieved.
-	 * @return List<Users> List of users who liked a particular blog.
-	 */
 	@Override
 	public List<Users> getBlogLikesByUser(Blog blog) {
 		Session session = factory.openSession();
@@ -86,15 +63,6 @@ public class LikesDao implements ILikes {
 		return users;
 	}
 
-	/**
-	 * To unlike a particular blog.
-	 * 
-	 * @param Blog
-	 *            Blog that is to be unliked.
-	 * @param user
-	 *            User that liked the blog.
-	 * @return boolean Success or Failure of the operation.
-	 */
 	@Override
 	public boolean unlike(Blog blog, Users user) {
 		Session session = factory.openSession();

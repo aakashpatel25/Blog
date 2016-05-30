@@ -15,19 +15,12 @@ public class CommentsDao implements IComments {
 	private static SessionFactory factory;
 
 	/**
-	 * CommentsDao constructor.
+	 * CommentDao constructor.
 	 */
 	public CommentsDao() {
 		factory = HibernateDao.openSession();
 	}
 
-	/**
-	 * To add a comment to a database on a particular blog.
-	 * 
-	 * @param Comments
-	 *            Comment that is to be added on the blog.
-	 * @return boolean True or false depending on the success or failure of the operation.
-	 */
 	@Override
 	public boolean addComment(Comments comment) {
 		Session session = factory.openSession();
@@ -48,13 +41,6 @@ public class CommentsDao implements IComments {
 		return commentId.longValue() > 0;
 	}
 
-	/**
-	 * To edit the comment.
-	 * 
-	 * @param commentId
-	 *            CommentId of the comment.
-	 * @return boolean True or false depending on success or failure.
-	 */
 	@Override
 	public boolean editComment(long commentId, String newComment) {
 		Session session = factory.openSession();
@@ -78,13 +64,6 @@ public class CommentsDao implements IComments {
 		return true;
 	}
 
-	/**
-	 * To delete a comment on a particular blog.
-	 * 
-	 * @param commentId
-	 *            Id of the comment.
-	 * @return boolean True or false depending on the success of the operation.
-	 */
 	@Override
 	public boolean deleteComment(long commentId) {
 		Session session = factory.openSession();
@@ -94,13 +73,6 @@ public class CommentsDao implements IComments {
 		return result>0;
 	}
 
-	/**
-	 * To delete all the comments on a particular blog.
-	 * 
-	 * @param Blog
-	 *            Blog on which comments are to be deleted.
-	 * @return boolean True or false depending on success or failure of operation.
-	 */
 	@Override
 	public boolean deleteBlogComments(Blog blog) {
 		Session session = factory.openSession();
@@ -111,15 +83,6 @@ public class CommentsDao implements IComments {
 		return result > 0;
 	}
 
-	/**
-	 * To obtain an id of the particular comment.
-	 * 
-	 * @param user
-	 *            User who wrote the comment.
-	 * @param blog
-	 *            Blog on which the comment is written.
-	 * @return long Id of the comment.
-	 */
 	@Override
 	public long getCommentId(Users user, Blog blog) {
 		Session session = factory.openSession();

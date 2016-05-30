@@ -25,13 +25,6 @@ public class BlogDao implements IBlog {
 		factory = HibernateDao.openSession();
 	}
 
-	/**
-	 * To insert a blog in the databse.
-	 * 
-	 * @param Blog
-	 *            Blog that is to be inserted in the database.
-	 * @return boolean True or false depending on the success or failure of the operation.
-	 */
 	@Override
 	public boolean insertBlog(Blog blog) {
 		Session session = factory.openSession();
@@ -52,15 +45,6 @@ public class BlogDao implements IBlog {
 		return blogId.longValue() > 0;
 	}
 
-	/**
-	 * To edit the title of the blog.
-	 * 
-	 * @param newTitle
-	 *            Updated title of the blog.
-	 * @param blogId
-	 *            BlogId of the blog for which the title is to be updated.
-	 * @return boolean True or false depending on the success of the operation.
-	 */
 	@Override
 	public boolean editTitle(String newTitle, long blogId) {
 		Session session = factory.openSession();
@@ -82,15 +66,6 @@ public class BlogDao implements IBlog {
 		return true;
 	}
 
-	/**
-	 * To edit the content of the blog post.
-	 * 
-	 * @param newPost
-	 *            Modified post of the blog.
-	 * @param blogId
-	 *            BlogId of the blog for which the post is to be modified.
-	 * @return boolean True or false depending on the success or failure of the operation.
-	 */
 	@Override
 	public boolean editPost(String newPost, long blogId) {
 		Session session = factory.openSession();
@@ -112,13 +87,6 @@ public class BlogDao implements IBlog {
 		return true;
 	}
 
-	/**
-	 * Get Blog from the blogId of the blog.
-	 * 
-	 * @param blogId
-	 *            BlogId of the blog that is to be fetched.
-	 * @return Blog Blog that has the given blogId.
-	 */
 	@Override
 	public Blog getBlog(long blogId) {
 		Session session = factory.openSession();
@@ -128,13 +96,6 @@ public class BlogDao implements IBlog {
 		return blog;
 	}
 
-	/**
-	 * To delete a blog.
-	 * 
-	 * @param blogId
-	 *            BlogId of the blog that is to be deleted.
-	 * @return boolean True or false depending upon the success of failure of the operation.
-	 */
 	@Override
 	public boolean deleteBlog(long blogId) {
 		Session session = factory.openSession();
@@ -144,15 +105,6 @@ public class BlogDao implements IBlog {
 		return result > 0;
 	}
 
-	/**
-	 * To get the blogId of the given blog.
-	 * 
-	 * @param username
-	 *            Username of the user who has written the post.
-	 * @param title
-	 *            Title of the blog.
-	 * @return long BlogId of the given blog.
-	 */
 	@Override
 	public long getBlogId(Users user, String title) {
 		try {
@@ -168,11 +120,6 @@ public class BlogDao implements IBlog {
 		}
 	}
 
-	/**
-	 * To fetch the latest five blogs from the database.
-	 * 
-	 * @return List<Blog> List of blog that are uploaded recently.
-	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Blog> fetchFiveRecentBlogs() {

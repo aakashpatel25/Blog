@@ -1,0 +1,85 @@
+package com.Blog.manageservices;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.Blog.Dao.UsersDao;
+import com.Blog.Management.IUserManagement;
+import com.Blog.Service.IUsers;
+import com.Blog.beans.Users;
+
+public class UserManagementService implements IUserManagement{
+
+	private IUsers userDao;
+	
+	public UserManagementService(){
+		userDao = new UsersDao();
+	}
+	
+	private List<String> createList(String... args){
+		List<String> list = new ArrayList<String>();
+		for(String arg: args){
+			list.add(arg);
+		}
+		return list;
+	}
+	
+	private boolean verifyTokens(List<String> verification){
+		for(String var:verification){
+			if(var.isEmpty() || var == null){
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	@Override
+	public boolean userSingUp(String uname, String pass, String fName, String lName, String email) {
+		if(!verifyTokens(createList(uname,pass,fName,lName,email))){
+			return false;
+		} else {
+			Users existingUser = userDao.getUser(uname);
+			if(existingUser != null){
+				return false;
+			}
+			Users user = new Users(uname,pass,fName,lName,email);
+			return userDao.createNewUser(user);
+		} 
+	}
+
+	@Override
+	public Users getUser(String uname) {
+		if(!verifyTokens(createList(uname))){
+			return null;
+		}
+		return userDao.getUser(uname);
+	}
+
+	@Override
+	public boolean deactivateAccount(String username) {
+		if(!verifyTokens(createList(username))){
+			return false;
+		}
+		long userId = userDao.findUserId(username);
+		return userDao.deleteUser(userId);
+	}
+
+	@Override
+	public boolean checkUserName(String username) {
+		if(username==null || username.isEmpty()){
+			return false;
+		}
+		return userDao.findUserId(username) > 0;
+	}
+
+	@Override
+	public boolean changePassword(String username, String oldPassword,
+			String newPassword) {
+		if(username.isEmpty() || username==null || oldPassword.isEmpty() || oldPassword == null || newPassword.isEmpty()){
+			
+		}
+		return false;
+	}
+	
+	
+}

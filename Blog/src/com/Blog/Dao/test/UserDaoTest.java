@@ -2,6 +2,7 @@ package com.Blog.Dao.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -156,5 +157,14 @@ public class UserDaoTest {
 		assertEquals(user.getUserId(),userId);
 		assertEquals(user.getUsername(),USER_NAMES[0]);
 		assertEquals(user.getEmail(),EMAIL[0]);
+	}
+	
+	/**
+	 * Test if the getUserProfile function of UserDao works fine.
+	 */
+	@Test
+	public void testGetUserProfileNotExisting() {
+		final Users user = userDao.getUser("fake");
+		assertNull(user);
 	}
 }

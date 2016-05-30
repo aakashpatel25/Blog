@@ -1,0 +1,97 @@
+package com.Blog.Dao;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
+import com.Blog.Hibernate.HibernateDao;
+import com.Blog.Service.IComments;
+import com.Blog.beans.Blog;
+import com.Blog.beans.Comments;
+import com.Blog.beans.Users;
+
+public class CommentsDao implements IComments {
+	private static SessionFactory factory;
+
+	public CommentsDao() {
+		factory = HibernateDao.openSession();
+	}
+
+	@Override
+	public boolean addComment(Comments comment) {
+		Session session = factory.openSession();
+		Transaction tx = null;
+		Long commentId = new Long(0);
+		try {
+			tx = session.beginTransaction();
+			commentId = (Long) session.save(comment);
+			tx.commit();
+		} catch (HibernateException e) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return commentId.longValue() > 0;
+	}
+
+	@Override
+	public boolean editComment(long commentId, String newComment) {
+		Session session = factory.openSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			Comments comments = (Comments) session
+					.createQuery("FROM Comments as c where c.commentId = :commentId")
+					.setParameter("commentId", commentId).uniqueResult();
+			comments.setComment(newComment);
+			session.update(comments);
+			tx.commit();
+		} catch (HibernateException e) {
+			if (tx != null) {
+				tx.rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return true;
+	}
+
+	@Override
+	public boolean deleteComment(long commentId) {
+		Session session = factory.openSession();
+		String hql = "DELETE FROM Comments where commentId = :commentId";
+		int result = session.createQuery(hql).setParameter("commentId", commentId).executeUpdate();
+		session.close();
+		return result>0;
+	}
+
+	@Override
+	public boolean deleteBlogComments(Blog blog) {
+		Session session = factory.openSession();
+		int result = session
+				.createQuery("Delete FROM Comments where blog = :blog")
+				.setParameter("blog", blog).executeUpdate();
+		session.close();
+		return result > 0;
+	}
+
+	@Override
+	public long getCommentId(Users user, Blog blog) {
+		Session session = factory.openSession();
+		try{
+			long commentId = (long) session
+					.createQuery("Select c.commentId from Comments as c where c.blog=:blog and c.user = :user")
+					.setParameter("blog", blog).setParameter("user", user)
+					.uniqueResult();
+			session.close();
+			return commentId;
+		} catch (NullPointerException e){
+			return 0;
+		}
+	}
+}

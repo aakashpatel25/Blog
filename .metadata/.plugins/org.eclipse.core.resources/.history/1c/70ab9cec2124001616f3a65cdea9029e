@@ -1,0 +1,7 @@
+package com.Blog.manageservices;
+
+import com.Blog.Management.IUserManagement;
+
+public class UserManagementService implements IUserManagement{
+
+}

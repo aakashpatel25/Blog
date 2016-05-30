@@ -1,0 +1,33 @@
+package com.Blog.Management;
+
+import com.Blog.beans.Users;
+
+public interface IUserManagement {
+	
+	/**
+	 * To signup new user.
+	 * @param uname
+	 * 			Username of the user.
+	 * @param pass
+	 * 			Password of the user.
+	 * @param fName
+	 * 			First name of the user.
+	 * @param lName
+	 * 			Last name of the user.
+	 * @param email
+	 * 			Email address of the user.
+	 * @return int
+	 * 			1 for success. 2 for username taken. 0 for not enough information.
+	 */
+	public int userSingUp(String uname,String pass,String fName,String lName,String email);
+	
+	
+	/**
+	 * To obtain the user information for profile purpose.
+	 * @param uname
+	 * 			Username of the user.
+	 * @return User
+	 * 			User object of the user.
+	 */
+	public Users getUser(String uname);
+}

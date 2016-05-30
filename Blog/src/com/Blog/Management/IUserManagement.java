@@ -1,0 +1,94 @@
+package com.Blog.Management;
+
+import com.Blog.beans.Users;
+
+public interface IUserManagement {
+	
+	/**
+	 * To signup new user.
+	 * @param uname
+	 * 			Username of the user.
+	 * @param pass
+	 * 			Password of the user.
+	 * @param fName
+	 * 			First name of the user.
+	 * @param lName
+	 * 			Last name of the user.
+	 * @param email
+	 * 			Email address of the user.
+	 * @return boolean
+	 * 			For success or failure.
+	 */
+	public boolean userSingUp(String uname,String pass,String fName,String lName,String email);
+	
+	
+	/**
+	 * To obtain the user information for profile purpose.
+	 * @param uname
+	 * 			Username of the user.
+	 * @return User
+	 * 			User object of the user.
+	 */
+	public Users getUser(String uname);
+	
+	/**
+	 * To deactive userAccount.
+	 * @param username
+	 * 			Username of the user for whom the account is to be deactived.
+	 * @return boolean
+	 * 			For success or failure.
+	 */
+	public boolean deactivateAccount(String username);
+	
+	/**
+	 * To check if the username exists or taken.
+	 * @param username
+	 * 			Username that the new user wants to take.
+	 * @return boolean
+	 * 			True or false depending on if user exists or not. 
+	 */
+	public boolean checkUserName(String username);
+	
+	/**
+	 * To change the password of the user.
+	 * 
+	 * @param uesrname
+	 * 			Username of the user for whom the password is to be changed.
+	 * @param oldPassword
+	 * 			Old Password of the user. Mainly used for authentication purpose.
+	 * @param newPassword
+	 * 			Password that is to be updated.
+	 * @return boolean
+	 * 			Depending on the successful change of password.
+	 */
+	public boolean changePassword(String username,String oldPassword,String newPassword);
+	
+	/**
+	 * To change the email address of the user.
+	 * 
+	 * @param username
+	 * 			Username of the user for whom the email is to chnaged.
+	 * @param password
+	 * 			Password of the user. For authentication purpose.
+	 * @param newEmail
+	 * 			New Email address of the user.
+	 * @return boolean
+	 * 			True or false depending on successful change of email.
+	 */
+	public boolean changeUserEmail(String username,String password,String newEmail);
+	
+	/**
+	 * To change personal information of the user.
+	 * @param username
+	 * 		Username of the user for whom the personal information is to be changed.
+	 * @param password
+	 * 		Password of the user. For authentication purpose.
+	 * @param fName
+	 * 		Updated first name of the user.
+	 * @param lName
+	 * 		Updated last name of the user.
+	 * @return boolean
+	 * 		Based on successful change of the user information.
+	 */
+	public boolean changeUserInformation(String username,String password,String fName,String lName);
+}

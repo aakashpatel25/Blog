@@ -1,0 +1,14 @@
+package com.Blog.manageservices;
+
+import com.Blog.Management.IUserManagement;
+import com.Blog.beans.Users;
+
+public class UserManagementService implements IUserManagement{
+
+	@Override
+	public boolean userSingUp(String uname, String pass, String fName, String lName, String email) {
+		Users user = new Users(uname,pass,fName,lName,email);
+		return false;
+	}
+
+}

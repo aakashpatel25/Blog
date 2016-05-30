@@ -1,0 +1,53 @@
+package com.Blog.manageservices;
+
+import com.Blog.Dao.UsersDao;
+import com.Blog.Management.IUserManagement;
+import com.Blog.Service.IUsers;
+import com.Blog.beans.Users;
+
+public class UserManagementService implements IUserManagement{
+
+	private IUsers userDao;
+	
+	public UserManagementService(){
+		userDao = new UsersDao();
+	}
+	
+	@Override
+	public boolean userSingUp(String uname, String pass, String fName, String lName, String email) {
+		if(uname.isEmpty() || pass.isEmpty() || fName.isEmpty() || lName.isEmpty() || email.isEmpty()){
+			return false;
+		} else if (uname == null || pass== null || fName == null || lName == null || email == null){
+			return false;
+		}else {
+			Users existingUser = userDao.getUser(uname);
+			if(existingUser != null){
+				return false;
+			}
+			Users user = new Users(uname,pass,fName,lName,email);
+			return userDao.createNewUser(user);
+		} 
+	}
+
+	@Override
+	public Users getUser(String uname) {
+		if(uname.isEmpty()){
+			return null;
+		}
+		return userDao.getUser(uname);
+	}
+
+	@Override
+	public int deactivateAccount(String username) {
+		if(username.isEmpty() || username == null){
+			return 0;
+		}
+		long userId = userDao.findUserId(username);
+		boolean result = userDao.deleteUser(userId);
+		if(result){
+			return 1;
+		}else{
+			return 2;
+		}
+	}
+}
